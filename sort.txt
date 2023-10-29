@@ -1,0 +1,49 @@
+#include<iostream>
+using namespace std;
+void merge(long long a[],long long first,long long mid,long long end){
+    long long *arr=new long long[end-first+1];
+    long long i=first,j=mid+1,k=0;
+    
+    while(i<=mid&&j<=end){
+        if(a[i]<=a[j]){
+            arr[k++]=a[i++];
+        }
+        else{
+            arr[k++]=a[j++];
+        }
+    }
+    while(i<=mid){
+        arr[k++]=a[i++];
+    }
+    while(j<=end){
+        arr[k++]=a[j++];
+    }
+    k=0;
+    for(long long i=first;i<=end;i++){
+        a[i]=arr[k++];
+    }
+    delete []arr;
+}
+void merge_sort(long long a[],long long first,long long end){
+    if(first<end){
+        long long m=(first+end)/2;
+        merge_sort(a,first,m);
+        merge_sort(a,m+1,end);
+        merge(a,first,m,end);
+    }
+}
+int main(){
+    long long n;
+    cin>>n;
+    long long a[n];
+    for(long long i=0;i<n;i++){
+        cin>>a[i];
+    }
+    merge_sort(a,0,n-1);
+    for(long long i=0;i<n-1;i++){
+        cout<<a[i]<<" ";
+    }
+    cout<<a[n-1];
+    cout<<endl;
+    return 0;
+}
